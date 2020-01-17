@@ -21,7 +21,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="pdk5077798222787817954" />
+                <data android:scheme="pdk5077704636564027977" />
             </intent-filter>
         </activity>
         <activity

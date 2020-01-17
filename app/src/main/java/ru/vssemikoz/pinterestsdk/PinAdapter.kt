@@ -25,5 +25,3 @@ class PinAdapter(private val imageItemList: ArrayList<ImageItem>) : RecyclerView
     }
 
 }
-
-

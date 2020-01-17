@@ -13,7 +13,7 @@ import com.pinterest.android.pdk.PDKResponse
 
 class MainActivity : AppCompatActivity() {
 
-    private val appID = "5077798222787817954"
+    private val appID = "5077704636564027977"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
