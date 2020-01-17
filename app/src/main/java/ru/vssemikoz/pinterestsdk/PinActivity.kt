@@ -2,12 +2,13 @@ package ru.vssemikoz.pinterestsdk
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.pinterest.android.pdk.PDKCallback
 import com.pinterest.android.pdk.PDKClient
 import com.pinterest.android.pdk.PDKException
-import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_pin.*
 import org.json.JSONObject
 
 class PinActivity:AppCompatActivity() {
@@ -18,16 +19,28 @@ class PinActivity:AppCompatActivity() {
         getPins()
     }
 
+
+    private fun getUserList(listOfURLs: ArrayList<String>) {
+        recyclerView.visibility = View.VISIBLE
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        val imageItemList = ArrayList<ImageItem>()
+
+        imageItemList.addAll(ImageItem.getUrlList(listOfURLs))
+        val myAdapter = PinAdapter(imageItemList)
+        recyclerView.adapter = myAdapter
+    }
+
     private fun getPins() {
-        var params = HashMap<String, String>();
+        val params = HashMap<String, String>()
         params[PDKClient.PDK_QUERY_PARAM_FIELDS] = "image"
 
         PDKClient.getInstance().getPath("me/pins/", params, object : PDKCallback(){
 
             override fun onSuccess(response: JSONObject) {
                 super.onSuccess(response)
-                var listOfURLs = parse(response)
-                setImageByUrl(listOfURLs)
+                val listOfURLs = parseForUrl(response)
+                getUserList(listOfURLs)
             }
 
             override fun onFailure(exception: PDKException) {
@@ -37,7 +50,7 @@ class PinActivity:AppCompatActivity() {
         })
 
     }
-    fun parse(response : JSONObject): ArrayList<String> {
+    fun parseForUrl(response : JSONObject): ArrayList<String> {
         val resultData = ArrayList<String>()
         val data = response.getJSONArray("data")
         for (i in 0 until data.length()) {
@@ -51,19 +64,4 @@ class PinActivity:AppCompatActivity() {
         return resultData
     }
 
-
-    fun setImageByUrl(urlList: ArrayList<String>?){
-        val listOfImageView  = ArrayList<ImageView>()
-        listOfImageView.add(findViewById(R.id.imageView))
-        listOfImageView.add(findViewById(R.id.imageView2))
-        listOfImageView.add(findViewById(R.id.imageView3))
-        listOfImageView.add(findViewById(R.id.imageView4))
-        listOfImageView.add(findViewById(R.id.imageView5))
-        listOfImageView.add(findViewById(R.id.imageView6))
-
-        for (i in 0 until listOfImageView.size){
-            Picasso.with(this).load(urlList?.get(i)).into(listOfImageView[i])
-        }
-
-    }
 }

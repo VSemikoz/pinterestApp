@@ -13,13 +13,12 @@ import com.pinterest.android.pdk.PDKResponse
 
 class MainActivity : AppCompatActivity() {
 
-    private val appID = "5077704636564027977"
+    private val appID = "5077798222787817954"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        var loginButton : Button = findViewById(R.id.login_button)
+        val loginButton : Button = findViewById(R.id.login_button)
         loginButton.setOnClickListener{
             onLogin()
         }
